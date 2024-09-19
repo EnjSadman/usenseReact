@@ -11,17 +11,18 @@ const COUNTRIES_API = "https://restcountries.com/v3.1/currency/"
 export default async function Home() {
   let currencyData;
   let countriesData : Country[] = [];
-  let errorInfo = "no errors";
+  let errorInfo = false;
   const countriesPromises = [];
 
   try {
     const currencyRes = await fetch(MONO_API);
     currencyData = await currencyRes.json();
   } catch (error) {
-    errorInfo = `${error}`
+    errorInfo = true;
+    console.log(error);
   }
 
-  if (errorInfo === "no errors") {
+  if (!errorInfo) {
     for (let key in currencyData.conversion_rates) {
       const fetchRequest = fetch(`${COUNTRIES_API}${key}`)
       .then(res => res.json());

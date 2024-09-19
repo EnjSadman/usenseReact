@@ -1,3 +1,14 @@
+export type CurrencyData = {
+  conversion_rates: Record<string, number>;
+}
+
+export type countryCurrencyObject = {
+  countryName: string[],
+  exchangeRate: number,
+  currencyName: string,
+  currencySymbol: string,
+};
+
 export type Currency = {
   symbol: string
 }

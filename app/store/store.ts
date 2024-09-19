@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import currencyReducer from './slices/currencySlice'
-import countryReducer from './slices/countrySlice'
+import countryCurrencyReducer from './slices/countryCurrencySlice'
 import exchangeReducer from './slices/exchangeSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      currencyReducer,
-      countryReducer,
+      countryCurrencyReducer,
       exchangeReducer
     }
   })
