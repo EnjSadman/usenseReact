@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import _ from "lodash";
 
 interface initial {
   currencyAmount: number,
@@ -6,9 +7,14 @@ interface initial {
   currencyTo: string[]
 }
 
+interface changeCurrency {
+  index: number,
+  value: string
+}
+
 
 const initialState : initial = {
-  currencyAmount: 0,
+  currencyAmount: 1,
   currencyFrom: process.env.NEXT_PUBLIC_BASE_CURRENCY || "UAH",
   currencyTo: process.env.NEXT_PUBLIC_BASE_CONVERSION_CURRENCY?.split(",") || ["USD"]
 }
@@ -17,11 +23,13 @@ const exchangeSlice = createSlice({
   name: "exchange",
   initialState,
   reducers: {
-    setCurrencyFrom: (state, action : PayloadAction<string>) => {
-      state.currencyFrom = action.payload
+    changeCurrencyFrom: (state, action) => {
+      state.currencyFrom = action.payload;
     },
-    setCurrencyTo: (state, action) => {
-      state.currencyTo = [...state.currencyTo, action.payload]
+    changeCurrencyTo: (state, action: PayloadAction <changeCurrency>) => {
+        const temp = _.cloneDeep(state.currencyTo);
+        temp[action.payload.index] = action.payload.value;
+        state.currencyTo = _.cloneDeep(temp);
     },
     setCurrencyAmount: (state, action : PayloadAction<number>) => {
       state.currencyAmount = action.payload
@@ -31,4 +39,4 @@ const exchangeSlice = createSlice({
 
 export default exchangeSlice.reducer;
 
-export const { setCurrencyFrom, setCurrencyTo, setCurrencyAmount } = exchangeSlice.actions; 
+export const { changeCurrencyTo, setCurrencyAmount, changeCurrencyFrom } = exchangeSlice.actions; 

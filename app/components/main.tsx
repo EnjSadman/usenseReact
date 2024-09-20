@@ -1,7 +1,5 @@
 "use client"
 
-import { useDispatch, useSelector } from "react-redux";
-
 import { Country, CurrencyData } from "../utils/types";
 import { useInitializeReduxData } from "../hooks/initializeReduxData";
 import { CurrencySelectWrapper } from "./currencySelectWrapper";
@@ -18,7 +16,7 @@ export function Main({ currencyData, countriesData, errorInfo } : Props) {
 
   return (
     <main>
-      <div className="container mx-auto">
+      <div className="container mx-auto flex flex-col align-middle">
         {
           (!errorInfo) 
           ? (

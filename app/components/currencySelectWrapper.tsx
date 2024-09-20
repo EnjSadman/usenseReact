@@ -13,12 +13,12 @@ export function CurrencySelectWrapper() {
   const defaultCurrency = countryCurrency.find(el => el.currencyName === currencyFrom);
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto grid grid-cols-4">
     <CurrencySelect
       currencyName={defaultCurrency?.currencyName || ""}
       currencySymbol={defaultCurrency?.currencySymbol || ""}
       currencyFlags={defaultCurrency?.countryName || []}
-      index={0}  />
+      index={-1}  />
     <CurrencyInput currentInputCurrency={defaultCurrency?.currencyName || ""} />
       {
         currencyTo.map((el, index)=> {

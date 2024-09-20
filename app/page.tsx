@@ -23,7 +23,7 @@ export default async function Home() {
   }
 
   if (!errorInfo) {
-    for (let key in currencyData.conversion_rates) {
+    for (const key in currencyData.conversion_rates) {
       const fetchRequest = fetch(`${COUNTRIES_API}${key}`)
       .then(res => res.json());
       countriesPromises.push(fetchRequest);

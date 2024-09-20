@@ -13,7 +13,7 @@ export function useInitializeReduxData({currencyData, countriesData} : Props) {
   const dispatch = useDispatch();
   const resultingArray = [];
 
-  for (let key in currencyData.conversion_rates) {
+  for (const key in currencyData.conversion_rates) {
     const countryObject : countryCurrencyObject = {
       countryName: [],
       exchangeRate: currencyData.conversion_rates[key],
