@@ -13,20 +13,22 @@ export function CurrencyInput({currentInputCurrency} : {currentInputCurrency : s
   const rateTo = countryCurrency.find(el => el.currencyName === currentInputCurrency)?.exchangeRate || 1;
 
   return (
-    <input
-    type="text"
-    className="border-black border-2"
-    value={(currencyAmount) ? (currencyAmount * findCoef(rateFrom, rateTo)).toFixed(2) : ""}
-    onChange={(event) => {
-      const inputValue = event.target.value;
-      const isValid = /[0-9]/.test(inputValue);
+    <>
+      <input
+      type="text"
+      className="border-black border-2"
+      value={(currencyAmount) ? (currencyAmount * findCoef(rateFrom, rateTo)).toFixed(2) : ""}
+      onChange={(event) => {
+        const inputValue = event.target.value;
+        const isValid = /[0-9]/.test(inputValue);
 
-      if (isValid && currentInputCurrency === currencyFrom) {
-        dispatch(setCurrencyAmount(Number(event.target.value)));
-      } else {
-        dispatch(setCurrencyAmount((Number(event.target.value) / findCoef(rateFrom, rateTo))));
-      }
-    }}
-/>
+        if (isValid && currentInputCurrency === currencyFrom) {
+          dispatch(setCurrencyAmount(Number(event.target.value)));
+        } else {
+          dispatch(setCurrencyAmount((Number(event.target.value) / findCoef(rateFrom, rateTo))));
+        }
+      }}
+    />
+    </>
   )
 }

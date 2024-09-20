@@ -11,10 +11,10 @@ interface Props {
   currencyName: string,
   currencySymbol: string,
   currencyFlags: string[],
-  index: number,
+  arrayIndex: number,
 }
 
-export function CurrencySelect ({currencyName, currencySymbol, currencyFlags, index} : Props) {
+export function CurrencySelect ({currencyName, currencySymbol, currencyFlags, arrayIndex} : Props) {
   const dispatch = useDispatch();
 
   const { countryCurrency } = useSelector((state : RootState) => state.countryCurrencyReducer);
@@ -23,38 +23,41 @@ export function CurrencySelect ({currencyName, currencySymbol, currencyFlags, in
   return (
     <div>
       <div 
-        className="flex flex-row align-middle justify-between"
+        className="flex flex-row items-center justify-between bg-white cursor-pointer"
         onClick={() => {
           setSelectOpen(!selectOpen);
         }}
       >
-        {
-          currencyFlags.map((el, index)=> <Flag key={index} code={el || ""} className="w-4 h-4"/>)
-        }   
-        {`${currencyName} ${currencySymbol}`}
-        <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M11.9999 13.9394L17.4696 8.46973L18.5303 9.53039L11.9999 16.0607L5.46961 9.53039L6.53027 8.46973L11.9999 13.9394Z" fill="#000000"></path> </g></svg>
+        <div>
+          <Flag code={(currencyFlags.includes("US")) ? "us" : currencyFlags[0]} className="w-4 h-4"/>
+          {`${currencyName} ${currencySymbol}`}
+        </div>
+          <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M11.9999 13.9394L17.4696 8.46973L18.5303 9.53039L11.9999 16.0607L5.46961 9.53039L6.53027 8.46973L11.9999 13.9394Z" fill="#000000"></path> </g></svg>
       </div>
       <div
         style={{"height": (selectOpen) ? "600px" : "0px"}}
-        className="flex flex-col overflow-scroll"
+        className="absolute w-40 overflow-x-hidden flex flex-col overflow-scroll transition-all ease-linear duration-100 bg-white"
       >
         {countryCurrency.map((el, index) => (
           <div
+            className="border-black border-b-2 cursor-pointer hover:bg-slate-300"
             key={index}
-            className="transition-all"
             onClick={() => {
               setSelectOpen(!selectOpen);
               if (index === -1) {
                 dispatch(changeCurrencyFrom(el))
               } else {
                 dispatch(changeCurrencyTo({              
-                  index: index,
+                  index: arrayIndex,
                   value: el.currencyName
                 }))
               }
             }}
           >
-            <Flag className="w-4 h-4" code={(el.currencyName === "USD") ? "USA" : el.countryName[0]}/> 
+            <Flag
+              className="w-4 h-4"
+              code={(el.currencyName === "USD") ? "USA" : el.countryName[0]}
+            /> 
             {`${el.countryName} ${el.currencySymbol}`}
           </div>
         ))}

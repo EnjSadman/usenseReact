@@ -26,6 +26,16 @@ const exchangeSlice = createSlice({
     changeCurrencyFrom: (state, action) => {
       state.currencyFrom = action.payload;
     },
+    addNewExchanger:(state) => {
+      const temp = [...state.currencyTo];
+      temp.push("USD");
+      state.currencyTo = [...temp];
+    },
+    deleteExchanger:(state, action : PayloadAction<number>) => {
+      const temp = [...state.currencyTo];
+      temp.splice(action.payload, 1);
+      state.currencyTo = [...temp];
+    },
     changeCurrencyTo: (state, action: PayloadAction <changeCurrency>) => {
         const temp = _.cloneDeep(state.currencyTo);
         temp[action.payload.index] = action.payload.value;
@@ -39,4 +49,4 @@ const exchangeSlice = createSlice({
 
 export default exchangeSlice.reducer;
 
-export const { changeCurrencyTo, setCurrencyAmount, changeCurrencyFrom } = exchangeSlice.actions; 
+export const { changeCurrencyTo, setCurrencyAmount, changeCurrencyFrom, addNewExchanger, deleteExchanger } = exchangeSlice.actions; 

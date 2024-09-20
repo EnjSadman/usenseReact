@@ -1,6 +1,4 @@
 import { Header } from "./components/header";
-
-import { Footer } from "./components/footer";
 import { Main } from "./components/main";
 import { Country } from "./utils/types";
 import StoreProvider from "./StoreProvider";
@@ -37,11 +35,10 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
       <StoreProvider>
+        <Header />
         <Main currencyData={currencyData} countriesData={countriesData} errorInfo={errorInfo}/>
       </StoreProvider>
-      <Footer />
     </>
   );
 }
